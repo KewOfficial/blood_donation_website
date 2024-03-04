@@ -3,6 +3,8 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\DonorController;
+use App\Http\Controllers\EventController;
 
 
 /*
@@ -28,9 +30,20 @@ Route::post('/register', [RegistrationController::class, 'processRegistration'])
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'processLogin']);
 Route::post('/logout', [LoginController::class, 'logout']);
+Route::middleware(['auth'])->group(function () {
+ 
+});
+
+Route::get('/donor-dashboard', [DonorController::class, 'dashboard'])->name('donor.dashboard');
 
 
 Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
-Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+Route::get('/contact', [PagesController::class, 'contact'])->name('contact'); 
+
+              //Event Routes
+Route::get('/donors/list-upcoming', [EventController::class, 'listUpcomingEvents'])->name('donors.list_upcoming');
+Route::get('/donors/event-details/{id}', [EventController::class, 'eventDetails'])->name('donors.event_details');
+Route::get('/donors/registration-participation', [EventController::class, 'registrationParticipation'])->name('donors.registration_participation');
+Route::get('/donors/countdown-timer/{id}', [EventController::class, 'countdownTimer'])->name('donors.countdown_timer');

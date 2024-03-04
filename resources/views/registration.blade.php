@@ -56,11 +56,6 @@
                 <input type="password" id="password_confirmation" name="password_confirmation" required>
             </div>
             
-            <div class="form-group">
-                <label for="terms">Agree to terms and conditions:</label>
-                <input type="checkbox" id="terms" name="terms" required>
-            </div>
-            
             <!-- Submit Button -->
             <div class="form-group">
                 <button type="submit">Register</button>

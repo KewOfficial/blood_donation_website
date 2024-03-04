@@ -18,9 +18,10 @@ class LoginController extends Controller
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
+    
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
-            return redirect()->route('users.dashboard')->with('success', 'Login successful!');
+            return redirect()->route('donor-dashboard')->with('success', 'Login successful!');
         }
 
         return redirect()->back()->withErrors(['login' => 'Invalid username or password.'])->withInput();
