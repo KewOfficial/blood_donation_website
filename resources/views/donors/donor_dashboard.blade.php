@@ -9,8 +9,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <!-- Schedule Appointments -->
-            <div class="card">
+
                 <div class="card-header">
                     <h3 class="card-title">Schedule Appointments</h3>
                 </div>
@@ -20,8 +19,6 @@
             </div>
         </div>
         <div class="col-md-6">
-            <!-- View Upcoming Events -->
-            <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Upcoming Events</h3>
                 </div>
@@ -43,28 +40,6 @@
                                         <button type="submit" class="btn btn-success">Register</button>
                                     </form>
                                 </li>
-
-                                <!-- Event Details Modal -->
-                                <div class="modal fade" id="eventDetailsModal{{ $event->id }}" tabindex="-1" role="dialog" aria-labelledby="eventDetailsModalLabel{{ $event->id }}" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="eventDetailsModalLabel{{ $event->id }}">Event Details</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Purpose: {{ $event->purpose }}</p>
-                                                <p>Agenda: {{ $event->agenda }}</p>
-                                                <p>Special Guests: {{ $event->special_guests }}</p>
-                                               
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             @endforeach
                         </ul>
@@ -91,19 +66,7 @@
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Schedule Appointments Menu Item -->
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-calendar"></i>
-                            <p>Schedule Appointments</p>
-                        </a>
-                    </li>
-
-                    <!-- View Upcoming Events Menu Item -->
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-calendar-alt"></i>
-                            <p>View Upcoming Events</p>
+                    
                         </a>
                     </li>
                 </ul>
@@ -116,27 +79,5 @@
 @stop
 
 @section('scripts')
-    <script>
-        // Countdown Timer Logic
-        @foreach($upcomingEvents as $event)
-            var countdownDate{{ $event->id }} = new Date("{{ $event->date }} {{ $event->time }}").getTime();
-            
-            var x{{ $event->id }} = setInterval(function() {
-                var now = new Date().getTime();
-                var distance = countdownDate{{ $event->id }} - now;
-                
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                document.getElementById("countdown-{{ $event->id }}").innerHTML = "Time Remaining: " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-                
-                if (distance < 0) {
-                    clearInterval(x{{ $event->id }});
-                    document.getElementById("countdown-{{ $event->id }}").innerHTML = "Event Expired";
-                }
-            }, 1000);
-        @endforeach
-    </script>
+  
 @stop

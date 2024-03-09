@@ -39,12 +39,13 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <!-- Schedule Appointments Menu Item -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-calendar"></i>
-                <p>Schedule Appointments</p>
-            </a>
-        </li>
+<li class="nav-item">
+    <a href="{{ route('donors.schedule_appointment') }}" class="nav-link">
+        <i class="nav-icon fas fa-calendar-plus"></i>
+        <p>Schedule Appointments</p>
+    </a>
+</li>
+
 
         <!-- View Upcoming Events Menu Item -->
         <li class="nav-item has-treeview">
@@ -78,6 +79,13 @@
                     </a>
                 </li>
             </ul>
+        </li>
+        <!-- Donor Loyalty Program Menu Item -->
+        <li class="nav-item">
+            <a href="{{ route('donors.loyalty_program') }}" class="nav-link">
+                <i class="fas fa-medal nav-icon"></i>
+                <p>Donor Loyalty Program</p>
+            </a>
         </li>
     </ul>
 </nav>

@@ -47,3 +47,9 @@ Route::get('/donors/list-upcoming', [EventController::class, 'listUpcomingEvents
 Route::get('/donors/event-details/{id}', [EventController::class, 'eventDetails'])->name('donors.event_details');
 Route::get('/donors/registration-participation', [EventController::class, 'registrationParticipation'])->name('donors.registration_participation');
 Route::get('/donors/countdown-timer/{id}', [EventController::class, 'countdownTimer'])->name('donors.countdown_timer');
+                     //schedule-appointment route
+Route::get('/donors/schedule-appointment', [DonorController::class, 'scheduleAppointment'])->name('donors.schedule_appointment');
+          //loyalty program route
+Route::get('/donors/loyalty-program', [DonorController::class, 'loyaltyProgram'])->name('donors.loyalty_program');
+Route::get('/view-activities', [DonorController::class, 'viewActivities'])->name('view_activities');
+Route::get('/view-rewards', [DonorController::class, 'viewRewards'])->name('view_rewards');
