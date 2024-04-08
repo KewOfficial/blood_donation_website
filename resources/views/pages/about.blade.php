@@ -1,234 +1,296 @@
 @extends('layouts.app')
 
-@section('title', 'About Us')
-
-@section('styles')
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(to right, #2CC3D5, #3E4E50);
-        font-family: 'Merriweather', sans-serif;
-        color: black;
-    }
-
-    .container {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        box-sizing: border-box;
-        animation: fadeIn 1s ease-out;
-    }
-
-    h2, h3 {
-        font-family: 'Roboto', serif;
-        font-weight: bold;
-        color: #EE4019;
-        margin-bottom: 10px;
-        border: 2px solid #C7C4C4;
-        border-radius: 10px;
-        padding: 10px;
-        transition: transform 0.5s ease, box-shadow 0.5s ease; /* Added box-shadow transition */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added subtle shadow effect */
-    }
-
-    h2:hover, h3:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Adjusted shadow effect on hover */
-    }
-
-    p {
-        font-size: 1.2em;
-        margin-bottom: 20px;
-        border: 2px solid #C7C4C4;
-        border-radius: 10px;
-        padding: 10px;
-        transition: transform 0.5s ease, box-shadow 0.5s ease; /* Added box-shadow transition */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added subtle shadow effect */
-    }
-
-    p:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Adjusted shadow effect on hover */
-    }
-
-    .statistics ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .statistics li {
-        font-size: 1.5em;
-        margin-bottom: 10px;
-        text-align: center;
-        transition: transform 0.5s ease, box-shadow 0.5s ease; /* Added box-shadow transition */
-        border: 2px solid #C7C4C4;
-        border-radius: 10px;
-        padding: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added subtle shadow effect */
-    }
-
-    .statistics li:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Adjusted shadow effect on hover */
-    }
-
-    .statistics li span {
-        display: block;
-        font-size: 1.2em;
-        color: black;
-    }
-
-    .statistics li .counter {
-        animation: countUp 2s ease-in-out;
-    }
-
-    .testimonials {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        gap: 20px;
-        margin-top: 20px;
-    }
-
-    .testimonial {
-        flex: 0 1 calc(45% - 20px);
-        background-color: #BCEC0B;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease;
-        position: relative;
-        margin-bottom: 20px;
-    }
-
-    .testimonial:hover {
-        transform: scale(1.05);
-    }
-
-    .testimonial img {
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease;
-    }
-
-    .testimonial:hover img {
-        transform: scale(1.1);
-    }
-
-    .testimonial p {
-        margin-top: 60px;
-        margin-bottom: 10px;
-        color: black;
-    }
-
-    .testimonial span {
-        display: block;
-        font-style: italic;
-        color: black;
-    }
-
-   
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateX(-50px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    .cta-buttons {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .cta-button {
-        background-color: #FA7A5D;
-        color: #fff;
-        cursor: pointer;
-        padding: 8px 20px;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        margin: 0 10px;
-    }
-
-    .cta-button:hover {
-        background-color: #C8644D;
-        transform: scale(1.05);
-    }
-
-    html {
-        scroll-behavior: smooth;
-    }
-
-    /* Bordered box */
-    .about-box {
-        border: 2px solid #F7F1EF;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-        background-color: #C7C4C4;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-</style>
-@endsection
-
 @section('content')
-<div class="container">
-    <div class="about-box">
-        <section id="about-intro">
-            <h2>About Tanzanian Blood Donation Network</h2>
-            <p>
-                The Tanzanian Blood Donation Network is a leading initiative dedicated to promoting voluntary blood donation
-                to ensure a steady and safe supply of blood for those in need. Our mission is to save lives and contribute to
-                the well-being of the community through the selfless act of blood donation.
-            </p>
-        </section>
+<!DOCTYPE html>
+<html lang="en">
 
-        <section id="statistics-impact">
-            <div class="statistics">
-                <h3>Our Impact</h3>
-                <p>Since our inception, we have made a significant impact on the healthcare system and the lives of countless individuals:</p>
-                <ul>
-                    <li>Number of Donors: 10,000+ <span class="counter"></span></li>
-                    <li>Blood Units Collected: 20,000+ <span class="counter"></span></li>
-                    <li>Lives Saved: 30,000+ <span class="counter"></span></li>
-                </ul>
-            </div>
-        </section>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Network - About Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Font Awesome CDN -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, #309430, #004d00);
+            color: white;
+        }
 
-        <section id="testimonials">
-            <h3>What People Are Saying</h3>
-            <div class="testimonials">
-                <div class="testimonial">
-                    <img src="{{ asset('images/jane.jpg') }}"  alt="Jane Doe Profile Image">
-                    <p>"I have been a regular donor with Tanzanian Blood Donation Network, and the experience has been wonderful. It's fulfilling to know that my contribution makes a difference."</p>
-                    <span>- Jane Doe, Donor</span>
-                </div>
+        .navigation {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 0;
+            background-color: #AF1831;
+        }
 
-                <div class="testimonial">
-                    <img src="{{ asset('images/michael.jpg') }}" alt="Michael Johnson Profile Image">
-                    <p>"I never realized how easy and fulfilling it is to donate blood until I joined the Tanzanian Blood Donation Network. It's a great way to give back to the community."</p>
-                    <span>- Michael Johnson, Donor</span>
-                </div>
-            </div>
-        </section>
+        .navigation a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .navigation a:hover {
+            color: #FFD700;
+        }
+
+        .hero-section {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .hero-section img {
+            width: 50%;
+            height: auto;
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+
+        .hero-content {
+            width: 50%;
+            padding: 20px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .hero-section:hover img {
+            transform: scale(1.1) rotateY(30deg);
+            filter: grayscale(50%);
+        }
+
+        .hero-section:hover .hero-content {
+            opacity: 1;
+        }
+
+        .cta-button {
+            background-color: #AF1831;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .cta-button:hover {
+            background-color: #8b122b;
+        }
+
+        .mission-vision,
+        .impact-milestones,
+        .our-story,
+        .meet-the-team,
+        .partnerships,
+        .call-to-action {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .mission-icon,
+        .vision-icon,
+        .values-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .fa-heart,
+        .fa-eye,
+        .fa-handshake {
+            color: #AF1831;
+            margin: 10px 0;
+        }
+
+        .team-member {
+            border-radius: 50%;
+            border: 3px solid #fff;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin: 10px auto;
+        }
+
+        .partner-logo {
+            width: 100px;
+            margin: 10px;
+        }
+
+        .call-to-action button {
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .section-heading:hover {
+            color: #FFD700;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 40px 0;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p,
+        .footer-section .contact-info,
+        .footer-section .footer-links {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .contact-info li,
+        .footer-links li {
+            margin-bottom: 10px;
+            list-style-type: none;
+        }
+
+        .social-icons {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .social-icons li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .bottom-bar {
+            background-color: #222;
+            padding: 20px 0;
+        }
+
+        .bottom-bar p {
+            margin-bottom: 0;
+            font-size: 12px;
+        }
+
+        .footer-links li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navigation">
+        <a href="{{ route('home') }}">Home</a>
+        <a href="{{ route('about') }}">About Us</a>
+        <a href="#how-it-works">How it Works</a>
+        <a href="#register">Register As Donor</a>
+        <a href="#contact">Contact Us</a>
     </div>
-</div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <img src="/dist/img/donor.jpg" alt="Community and Support">
+        <div class="hero-content">
+            <h1>Empowering Tanzanian Communities Through Blood Donation</h1>
+            <button class="cta-button">Learn More About Our Mission</button>
+        </div>
+    </div>
+
+    <!-- Mission, Vision, and Values -->
+    <div class="mission-vision">
+        <div>
+            <i class="fas fa-heart mission-icon"></i>
+            <h2>Our Mission</h2>
+            <p>The mission of the Blood Donation Network is to...</p>
+        </div>
+        <div>
+            <i class="fas fa-eye vision-icon"></i>
+            <h2>Our Vision</h2>
+            <p>Our vision is to...</p>
+        </div>
+        <div>
+            <i class="fas fa-handshake values-icon"></i>
+            <h2>Our Values</h2>
+            <p>At the core of our organization are values such as...</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-section">
+                        <h4>Contact Information</h4>
+                        <ul class="contact-info">
+                            <li><i class="fas fa-phone"></i> Phone: +255742848456</li>
+                            <li><i class="fas fa-envelope"></i> Email: info@blooddonationnetwork.co.tz</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Address: 123 Aggrey Street, Dar es salaam,
+                                Tanzania</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-section">
+                        <h4>Follow Us</h4>
+                        <ul class="social-icons">
+                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-section">
+                        <h4>Legal</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>&copy; 2024 Blood Donation Network. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
 @endsection

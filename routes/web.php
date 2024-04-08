@@ -1,10 +1,12 @@
 <?php
-use App\Http\Controllers\RegistrationController;
-use App\Http\Controllers\LoginController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\DonorController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\AuthController;
+
+
 
 
 /*
@@ -21,20 +23,19 @@ use App\Http\Controllers\EventController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-
 // Registration Routes
-Route::get('/register', [RegistrationController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegistrationController::class, 'processRegistration']);
-// Login Routes
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'processLogin']);
-Route::post('/logout', [LoginController::class, 'logout']);
-Route::middleware(['auth'])->group(function () {
- 
-});
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [AuthController::class, 'processRegistration']);
 
-Route::get('/donor-dashboard', [DonorController::class, 'dashboard'])->name('donor.dashboard');
+// Login Routes
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'processLogin']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// Donor Dashboard Route
+Route::get('/donor-dashboard', function () {
+    return view('donors.donor_dashboard');
+})->name('donor.dashboard')->middleware('auth:donor');
+
 
 
 Route::get('/', [PagesController::class, 'home'])->name('home');

@@ -9,12 +9,7 @@ class Event extends Model
     protected $fillable = [
         'name',
         'date',
-        'time',
+        'event_time',
         'location',
-      
     ];
-    public function scopeUpcoming($query)
-    {
-        return $query->where('date', '>', now());
-    }
 }

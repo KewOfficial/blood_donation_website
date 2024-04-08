@@ -23,7 +23,15 @@
             </ul>
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-             
+            <ul class="navbar-nav ml-auto">
+        <!-- Logout form/button -->
+        <li class="nav-item">
+            <form action="{{ route('logout') }}" method="post">
+                @csrf
+                <button type="submit" class="nav-link">Logout</button>
+            </form>
+        </li>
+    </ul>
             </ul>
         </nav>
 
@@ -37,7 +45,12 @@
         <!-- Sidebar Menu -->
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+    <li class="nav-item">
+            <a href="{{ route('donor.dashboard') }}" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i> 
+                <p>Donor Dashboard</p>
+            </a>
+        </li>
         <!-- Schedule Appointments Menu Item -->
 <li class="nav-item">
     <a href="{{ route('donors.schedule_appointment') }}" class="nav-link">
