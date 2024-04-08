@@ -11,14 +11,14 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      min-height: 100vh; /* Ensure body covers the full viewport height */
-      position: relative; /* Set body position to relative */
+      min-height: 100vh; 
+      position: relative; 
     }
     .container {
       max-width: 960px;
       margin: 0 auto;
       padding: 20px;
-      display: flex; /* Make the container a flexbox for side-by-side sections */
+      display: flex;
     }
     .header {
       background-color: #006400;
