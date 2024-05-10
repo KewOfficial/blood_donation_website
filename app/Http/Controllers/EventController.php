@@ -3,37 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Event;
+use App\Models\BloodBankEvent;
 
 class EventController extends Controller
 {
     public function listUpcomingEvents()
     {
-        $upcomingEvents = Event::where('date', '>', now())->get();
-
-        return view('donors.list_upcoming_events', compact('upcomingEvents'));
+        // Fetch upcoming events from the database
+        $upcomingEvents = BloodBankEvent::where('date', '>=', now())->get();
+    
+        // Pass the upcoming events to the view
+        return view('donors.upcoming_events', compact('upcomingEvents'));
     }
-
-    public function eventDetails($id)
-    {
-        
-        $event = Event::find($id);
-
-        return view('donors.event_details', compact('event'));
-    }
-
-    public function registrationParticipation()
-    {
-       
-
-        return view('donors.registration_participation');
-    }
-
-    public function countdownTimer($id)
-    {
-       
-        $event = Event::find($id);
-
-        return view('donors.countdown_timer', compact('event'));
-    }
+    
 }

@@ -137,13 +137,12 @@
     <a href="{{ route('register') }}">Register As Donor</a>
     <a href="{{ route('contact') }}">Contact Us</a>
 </div>
-
 <div class="hero-section">
     <img src="/dist/img/donate.jpg" alt="Blood Donation">
     <div class="hero-content">
         <h1>Save Lives, Donate Blood Today!</h1>
         <p>Join our community of donors and make a difference in Tanzanian healthcare.</p>
-        <button class="cta-button">Register as a Donor</button>
+        <a href="{{ route('register') }}" class="cta-button">Register as a Donor</a> 
     </div>
 </div>
 

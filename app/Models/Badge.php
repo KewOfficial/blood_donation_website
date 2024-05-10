@@ -7,14 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Badge extends Model
 {
     protected $fillable = [
-        'user_id',
         'name',
-        'points',
-        'active',
+        'image',
+        'description',
+        'donor_id', 
     ];
 
-    public function donor()
+    protected static function boot()
     {
-        return $this->belongsTo(Donor::class);
+        parent::boot();
+
+        // Add a saving event listener
+        static::saving(function ($badge) {
+            // Modify the image path to be relative to the public directory
+            $badge->image = 'images/badges/' . $badge->image;
+        });
     }
+
+    // Define relationships if needed
 }

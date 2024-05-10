@@ -53,46 +53,19 @@
         </li>
         <!-- Schedule Appointments Menu Item -->
 <li class="nav-item">
-    <a href="{{ route('donors.schedule_appointment') }}" class="nav-link">
-        <i class="nav-icon fas fa-calendar-plus"></i>
-        <p>Schedule Appointments</p>
+<a href="{{ route('schedule_appointment') }}" class="nav-link">
+    <i class="nav-icon fas fa-calendar-plus"></i>
+    <p>Schedule Appointments</p>
+</a>
+
+</li>
+        <!-- View Upcoming Events Menu Item -->
+<li class="nav-item">
+    <a href="{{ route('donors.list_upcoming') }}" class="nav-link">
+        <i class="nav-icon fas fa-calendar-alt"></i>
+        <p>Upcoming Events</p>
     </a>
 </li>
-
-
-        <!-- View Upcoming Events Menu Item -->
-        <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-calendar-alt"></i>
-                <p>View Upcoming Events<i class="right fas fa-angle-left"></i></p>
-            </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{ route('donors.list_upcoming') }}" class="nav-link">
-                        <i class="far fa-list-alt nav-icon"></i>
-                        <p>List of Upcoming Events</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('donors.event_details', ['id' => 1]) }}" class="nav-link">
-                        <i class="far fa-file-alt nav-icon"></i>
-                        <p>Event Details</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('donors.registration_participation') }}" class="nav-link">
-                        <i class="fas fa-user-plus nav-icon"></i>
-                        <p>Registration/Participation</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('donors.countdown_timer', ['id' => 1]) }}" class="nav-link">
-                        <i class="far fa-clock nav-icon"></i>
-                        <p>Countdown Timer</p>
-                    </a>
-                </li>
-            </ul>
-        </li>
         <!-- Donor Loyalty Program Menu Item -->
         <li class="nav-item">
             <a href="{{ route('donors.loyalty_program') }}" class="nav-link">
@@ -130,7 +103,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/js/adminlte.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @yield('scripts')
 </body>

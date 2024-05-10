@@ -108,8 +108,8 @@
         <a href="{{ route('home') }}">Home</a>
         <a href="{{ route('about') }}">About Us</a>
         <a href="#how-it-works">How it Works</a>
-        <a href="#register">Register As Donor</a>
-        <a href="#contact">Contact Us</a>
+        <a href="{{ route('register') }}">Register As Donor</a>
+        <a href="{{ route('contact') }}">Contact Us</a>
     </div>
   </header>
 

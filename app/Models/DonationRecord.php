@@ -18,8 +18,13 @@ class DonationRecord extends Model
         return $this->belongsTo(Donor::class);
     }
 
-    public function event()
+    public function bloodBankEvent()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(BloodBankEvent::class, 'event_id');
+    }
+
+    public function donorEvent()
+    {
+        return $this->belongsTo(DonorEvent::class, 'event_id');
     }
 }

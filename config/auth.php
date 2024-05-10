@@ -34,7 +34,6 @@ return [
     | Supported: "session"
     |
     */
-
     'guards' => [
         'web' => [
             'driver' => 'session',
@@ -45,6 +44,7 @@ return [
             'provider' => 'donors',
         ],
     ],
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -63,6 +63,7 @@ return [
     |
     */
 
+   
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
@@ -72,6 +73,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Donor::class,
         ],
+    
 
         // 'users' => [
         //     'driver' => 'database',
