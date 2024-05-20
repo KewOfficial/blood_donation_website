@@ -38,7 +38,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
+            <a href="{{ route('donor.dashboard') }}" class="brand-link">
                 <span class="brand-text font-weight-light">Blood Donation</span>
             </a>
             
@@ -66,14 +66,14 @@
         <p>Upcoming Events</p>
     </a>
 </li>
-        <!-- Donor Loyalty Program Menu Item -->
-        <li class="nav-item">
-            <a href="{{ route('donors.loyalty_program') }}" class="nav-link">
-                <i class="fas fa-medal nav-icon"></i>
-                <p>Donor Loyalty Program</p>
-            </a>
-        </li>
-    </ul>
+ <!-- Lifeline Points Menu Item -->
+ <li class="nav-item">
+    <a href="{{ route('lifeline_points') }}" class="nav-link">
+        <i class="nav-icon fas fa-heartbeat"></i>
+        <p>Lifeline Points</p>
+    </a>
+</li>
+</ul>
 </nav>
 <!-- /.sidebar-menu -->
 

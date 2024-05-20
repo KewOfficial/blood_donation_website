@@ -3,10 +3,78 @@ body {
     background-color: #f2f2f2;
     margin: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure body takes full height of viewport */
+}
+
+.container {
+    flex: 1; /* Make container grow to fill remaining space */
+    max-width: 600px;
+    margin: 20px auto; /* Center the container */
+    padding: 20px;
+    overflow-y: auto; /* Make container scrollable */
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    .container {
+        max-width: 90%; /* Adjust width for smaller screens */
+    }
+}
+
+.bottom-content {
+    background-color: #f9f9f9;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    flex-shrink: 0; /* Ensure the bottom content does not shrink */
+}
+
+.form-group {
+    margin-bottom: 10px; /* Reduced spacing between form groups */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 2px; /* Reduced spacing between label and input */
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 6px; /* Adjusted padding */
+    box-sizing: border-box; /* Ensure padding does not increase the total width */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+input:focus {
+    border-color: #e74c3c;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.7);
+}
+
+label {
+    font-weight: bold;
+    color: #e74c3c;
+    display: block;
+    margin-bottom: 3px;
+}
+
+label:hover {
+    color: #c0392b;
+    cursor: pointer;
 }
 
 .button-container {
@@ -28,61 +96,6 @@ body {
 .button-container a:hover {
     color: #c0392b;
 }
-
-.form-group {
-    background-color: rgba(255, 255, 255, 0.9); 
-    padding: 10px;
-    border-radius: 5px;
-    backdrop-filter: blur(5px); 
-    transition: transform 0.5s ease;
-    transform-style: preserve-3d;
-}
-
-input:focus {
-    border-color: #e74c3c;
-    box-shadow: 0 0 10px rgba(231, 76, 60, 0.7);
-}
-
-label {
-    font-weight: bold;
-    color: #e74c3c;
-    display: block;
-    margin-bottom: 3px;
-}
-
-label:hover {
-    color: #c0392b;
-    cursor: pointer;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 5px;
-    margin-top: 4px;
-    margin-bottom: 6px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #e74c3c;
-    color: #fff;
-    cursor: pointer;
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: background-color 0.3s ease;
-   
-}
-
-button:hover {
-    background-color: #c0392b; 
-}
-
 
 @keyframes fadeIn {
     from {

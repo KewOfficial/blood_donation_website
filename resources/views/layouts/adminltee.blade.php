@@ -12,7 +12,6 @@
     @yield('css')
 </head>
 <body class="hold-transition sidebar-mini">
-<!-- Site wrapper -->
 <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -57,84 +56,122 @@
         </a>
 
         <!-- Sidebar Menu -->
-<nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item">
-            <a href="#" class="nav-link active">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>Dashboard Home</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('blood.bank.upcoming.events') }}" class="nav-link">
-                <i class="nav-icon fas fa-calendar"></i>
-                <p>View Upcoming Events</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('bloodbank.events.create') }}" class="nav-link">
-                <i class="nav-icon fas fa-calendar-plus"></i>
-                <p>Create Event</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-boxes"></i>
-                <p>Manage Inventory</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-line"></i>
-                <p>Analytics and Reporting</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-bell"></i>
-                <p>Alerts and Notifications</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-bullhorn"></i>
-                <p>Campaign Management</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-bar"></i>
-                <p>Reporting and Analytics</p>
-            </a>
-        </li>
-    </ul>
-</nav>
-<!-- /.sidebar-menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a href="{{ route('blood.bank.dashboard') }}" class="nav-link{{ Request::is('blood-bank-dashboard') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard Home</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('blood.bank.upcoming.events') }}" class="nav-link{{ Request::is('blood-bank/upcoming-events') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-calendar"></i>
+                        <p>View Upcoming Events</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('bloodbank.events.create') }}" class="nav-link{{ Request::is('bloodbank/events/create') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-calendar-plus"></i>
+                        <p>Create Event</p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Manage Donors <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <!-- Add Donor -->
+<li class="nav-item">
+    <a href="{{ route('blood.bank.add.donor.form') }}" class="nav-link">
+        <i class="nav-icon fas fa-user-plus"></i>
+        <p>Add Donor</p>
+    </a>
+</li>
 
+<!-- All Donors -->
+<li class="nav-item">
+    <a href="{{ route('blood.bank.donors') }}" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>All Donors</p>
+    </a>
+</li>
+
+<!-- Search Donors -->
+<li class="nav-item">
+    <a href="{{ route('blood.bank.search.donors') }}" class="nav-link">
+        <i class="nav-icon fas fa-search"></i>
+        <p>Search Donors</p>
+    </a>
+</li>
+
+                    </ul>
+                </li>
+                        
+                <li class="nav-item">
+                    <a href="{{ route('blood.manage_inventory') }}" class="nav-link{{ Request::is('blood/manage-inventory') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-boxes"></i>
+                        <p>Manage Inventory</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-line"></i>
+                        <p>Analytics and Reporting</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-bell"></i>
+                        <p>Alerts and Notifications</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-bullhorn"></i>
+                        <p>Campaign Management</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-bar"></i>
+                        <p>Reporting and Analytics<>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
     </aside>
+    <!-- /.sidebar -->
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            @yield('content_header')
+        </section>
+
         <!-- Main content -->
         <section class="content">
-            <div class="container-fluid">
-                <!-- Main content area -->
-                @yield('content')
-                <!-- /.content -->
-            </div><!-- /.container-fluid -->
+            @yield('content')
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
     <!-- Main Footer -->
     <footer class="main-footer">
-        <!-- To the right -->
         <div class="float-right d-none d-sm-inline">
-            Your Blood Bank
+            Blood Bank Management System
         </div>
-       
-        <strong>© 2024 <a href="#">Blood Bank</a>.</strong> All rights reserved.
+        <strong>&copy; 2024 <a href="#">Blood Bank</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->
@@ -142,10 +179,9 @@
 <!-- jQuery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/js/adminlte.min.js"></script>
-<!-- Custom JS -->
 @yield('js')
 </body>
 </html>

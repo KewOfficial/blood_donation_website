@@ -1,16 +1,17 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class DonorEvent extends Model
+class Donation extends Model
 {
-    use HasFactory;
+    protected $fillable = ['donor_id', 'blood_bank_event_id', 'donation_date'];
 
-    protected $fillable = ['name', 'date', 'event_time', 'location', 'blood_bank_event_id'];
+    public function donor(): BelongsTo
+    {
+        return $this->belongsTo(Donor::class);
+    }
 
     public function bloodBankEvent(): BelongsTo
     {

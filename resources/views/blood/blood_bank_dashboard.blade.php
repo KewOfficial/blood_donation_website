@@ -74,42 +74,9 @@
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <!-- Blood Inventory -->
-                <div class="tab-pane fade show active" id="inventory" role="tabpanel" aria-labelledby="inventory-tab">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Blood Inventory Levels</h3>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="bloodStockChart" width="400" height="200"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <!-- Manage Inventory -->
-                <div class="tab-pane fade" id="management" role="tabpanel" aria-labelledby="management-tab">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Manage Inventory</h3>
-                        </div>
-                        <div class="card-body">
-                            <!-- Inventory management form or table goes here -->
-                        </div>
-                    </div>
-                </div>
-                <!-- Donor Management -->
-                <div class="tab-pane fade" id="donor" role="tabpanel" aria-labelledby="donor-tab">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Donor Management</h3>
-                        </div>
-                        <div class="card-body">
-                            <!-- Donor management table goes here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+               
+               
+                
 @stop
 
 @section('css')

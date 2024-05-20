@@ -1,37 +1,34 @@
 <?php
 namespace App\Models;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
-class Donor extends Authenticatable
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Donor extends Model implements Authenticatable
 {
-    use Notifiable;
+    use AuthenticatableTrait;
 
-    protected $fillable = [
-        'full_name',
-        'email',
-        'phone',
-        'blood_type',
-        'password',
-    ];
+    protected $fillable = ['full_name', 'email', 'phone', 'blood_type', 'password', 'unique_id', 'total_points'];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    //  appointments relationship
-    public function appointments()
+    public function donations(): HasMany
     {
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(Donation::class);
     }
 
-    public function badges()
+    public function donorEvents(): HasMany
     {
-        return $this->hasMany(Badge::class);
+        return $this->hasMany(DonorEvent::class);
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return 'email';
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->password;
     }
 }
