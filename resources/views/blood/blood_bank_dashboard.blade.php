@@ -1,12 +1,12 @@
 @extends('layouts.adminltee')
 
-@section('title', 'Blood Bank Management Dashboard')
+@section('title', 'Blood Bank Management')
 
 @section('content_header')
     <div class="jumbotron jumbotron-fluid bg-primary text-white">
         <div class="container">
-            <h1 class="display-4">Blood Bank Dashboard</h1>
-            <p class="lead">Manage your blood bank efficiently with our comprehensive dashboard.</p>
+            <h1 class="display-4">Blood Bank Management</h1>
+            <p class="lead">Efficiently manage all blood-related activities in here.</p>
         </div>
     </div>
 @stop
@@ -32,10 +32,11 @@
                     <div class="info-box bg-success">
                         <span class="info-box-icon"><i class="fas fa-tint"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Total Blood Inventory</span>
-                            <span class="info-box-number">450 units</span>
+                            <span class="info-box-text">Total Units</span>
+                            <span class="info-box-number">{{ $totalUnits }}</span> <!-- Updated variable name -->
                         </div>
                     </div>
+                    
                     <div class="info-box bg-warning">
                         <span class="info-box-icon"><i class="fas fa-user"></i></span>
                         <div class="info-box-content">
@@ -56,27 +57,40 @@
         <div class="col-lg-8">
             <!-- Search Bar -->
             <div class="d-flex justify-content-end mb-4">
-                <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="form-inline" method="GET" action="{{ route('blood.bank.dashboard') }}">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search">
                     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
-            <!-- Tabbed Sections -->
-            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="inventory-tab" data-toggle="tab" href="#inventory" role="tab" aria-controls="inventory" aria-selected="true">Blood Inventory</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="management-tab" data-toggle="tab" href="#management" role="tab" aria-controls="management" aria-selected="false">Manage Inventory</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="donor-tab" data-toggle="tab" href="#donor" role="tab" aria-controls="donor" aria-selected="false">Donor Management</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-               
-               
-                
+            
+            <!-- Scheduled Appointments -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Scheduled Appointments</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Donor Name</th>
+                                <th>Appointment Date</th>
+                                <th>Appointment Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($appointments as $appointment)
+                                <tr>
+                                    <td>{{ $appointment->donor->full_name }}</td>
+                                    <td>{{ $appointment->appointment_date }}</td>
+                                    <td>{{ $appointment->appointment_time }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')

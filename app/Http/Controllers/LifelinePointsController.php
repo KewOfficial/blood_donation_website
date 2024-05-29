@@ -3,25 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Donor;
-use App\Models\Donation;
 use App\Models\DonorReward;
 use App\Models\HealthCheckupVoucher;
 use Illuminate\Http\Request;
+
 class LifelinePointsController extends Controller
 {
     public function index()
     {
         $donor = auth()->guard('donor')->user();
+        $donationCount = $donor->donations()->count();
 
         $donorInformation = [
             'name' => $donor->full_name,
             'email' => $donor->email,
             'total_points' => $donor->total_points,
             'tier' => $this->calculateTier($donor->total_points),
+            'donation_count' => $donationCount,
         ];
 
         $donationHistory = $donor->donations()->with('bloodBankEvent')->latest()->get();
-
         $availableRewards = $this->getAvailableRewards($donor->total_points);
 
         return view('donors.lifeline_points.index', compact('donorInformation', 'donationHistory', 'availableRewards'));
@@ -61,7 +62,6 @@ class LifelinePointsController extends Controller
     public function claimReward(Request $request)
     {
         $donor = auth()->guard('donor')->user();
-
         $tier = $this->calculateTier($donor->total_points);
 
         if ($tier === 'Bronze' && $donor->total_points >= 2) {
@@ -130,9 +130,7 @@ class LifelinePointsController extends Controller
         HealthCheckupVoucher::create([
             'donor_id' => $donorId,
             'voucher_code' => $uniqueCode,
-            'discount' => 50, // Assuming a 50% discount
+            'discount' => 50,
         ]);
     }
 }
-
-

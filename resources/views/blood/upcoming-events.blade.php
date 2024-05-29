@@ -38,49 +38,31 @@
 @stop
 
 @section('css')
-<!-- Custom CSS -->
-<style>
-    .event-card {
-        transition: transform 0.3s ease-in-out;
-        border: 1px solid #e0e0e0;
-        border-radius: 10px;
-        background-color: #fff;
-    }
+    @parent <!-- Include parent styles -->
 
-    .event-card:hover {
-        transform: scale(1.05);
-    }
+    <!-- Custom CSS -->
+    <style>
+        .event-card {
+            transition: transform 0.3s ease-in-out;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: #fff;
+        }
 
-    .card-title {
-        color: #333;
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
+        .event-card:hover {
+            transform: scale(1.05);
+        }
 
-    .card-text {
-        color: #666;
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-    }
+        .card-title {
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
 
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-    }
-
-    .btn-danger:hover {
-        background-color: #bd2130;
-        border-color: #bd2130;
-    }
-</style>
+        .card-text {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
 @stop

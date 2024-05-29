@@ -7,26 +7,75 @@ use App\Models\BloodBankEvent;
 use App\Models\BloodUnit;
 use App\Models\Donor;
 use App\Models\Appointment;
-use App\Models\DeferralReason;
+
 
 class BloodBankDashboardController extends Controller
 {
     public function index()
-    {
-        $bloodBankEvents = BloodBankEvent::all();
-        return view('blood.blood_bank_dashboard', ['bloodBankEvents' => $bloodBankEvents]);
+{
+    // Fetch all blood bank events
+    $bloodBankEvents = BloodBankEvent::all();
+
+    // Fetch all donors
+    $donors = Donor::all();
+
+    // Fetch scheduled appointments
+    $appointments = Appointment::whereDate('appointment_date', '>=', now())
+                                ->orderBy('appointment_time')
+                                ->get();
+
+    // Calculate blood inventory
+    $bloodTypes = BloodUnit::distinct()->pluck('blood_type')->toArray();
+    $rhFactors = BloodUnit::distinct()->pluck('rh_factor')->toArray();
+    $bloodInventory = [];
+
+    foreach ($bloodTypes as $bloodType) {
+        $bloodInventory[$bloodType] = [];
+        foreach ($rhFactors as $rhFactor) {
+            $totalUnits = BloodUnit::where('blood_type', $bloodType)
+                ->where('rh_factor', $rhFactor)
+                ->sum('units');
+
+            if ($totalUnits > 0) {
+                $bloodInventory[$bloodType][$rhFactor] = $totalUnits;
+            }
+        }
     }
 
-    public function viewUpcomingEvents()
-    {
-        $bloodBankEvents = BloodBankEvent::where('date', '>=', now())->get();
-        return view('blood.upcoming-events')->with('bloodBankEvents', $bloodBankEvents);
-    }
+    $totalUnits = collect($bloodInventory)->flatten()->sum();
+
+    return view('blood.blood_bank_dashboard', compact('bloodBankEvents', 'donors', 'appointments', 'totalUnits'));
+}
+public function viewUpcomingEvents()
+{
+    $bloodBankEvents = BloodBankEvent::where('date', '>=', now())->get();
+
+    return view('blood.upcoming-events', ['bloodBankEvents' => $bloodBankEvents]);
+}
 
     public function manageInventory()
     {
-        return view('blood.manage_inventory');
+        $bloodTypes = BloodUnit::distinct()->pluck('blood_type')->toArray();
+        $rhFactors = BloodUnit::distinct()->pluck('rh_factor')->toArray();
+        $bloodInventory = [];
+    
+        foreach ($bloodTypes as $bloodType) {
+            $bloodInventory[$bloodType] = [];
+            foreach ($rhFactors as $rhFactor) {
+                $totalUnits = BloodUnit::where('blood_type', $bloodType)
+                                        ->where('rh_factor', $rhFactor)
+                                        ->sum('units');
+                if ($totalUnits > 0) {
+                    $bloodInventory[$bloodType][$rhFactor] = $totalUnits;
+                }
+            }
+        }
+    
+        $totalUnitsAll = collect($bloodInventory)->flatten()->sum();
+    
+        return view('blood.manage_inventory', compact('bloodInventory', 'totalUnitsAll'));
     }
+    
 
     public function saveBloodUnit(Request $request)
     {
@@ -46,39 +95,13 @@ class BloodBankDashboardController extends Controller
         $bloodUnit->expiry_date = $validatedData['expiryDate'];
         $bloodUnit->save();
 
-        // Return success response
-        return response()->json(['message' => 'Blood unit saved successfully'], 200);
+        // Redirect back to the page with a success message
+        return redirect()->back()->with('success', 'Blood unit added successfully');
     }
-
-    public function showAddDonorForm()
-    {
-        return view('blood.add_donor');
-    }
-
-    public function addDonor(Request $request)
-    {
-        // Validation
-        $request->validate([
-            'full_name' => 'required|string',
-            'email' => 'required|email|unique:donors',
-            'phone' => 'required|string',
-            'blood_type' => 'required|string',
-            // Add validation rules for other fields here
-        ]);
-
-        // Create and save the donor
-        $donor = Donor::create($request->all());
-
-        // Update Lifeline Points for the donor
-        $this->updateLifelinePoints($donor);
-
-        return redirect()->route('blood.bank.donors')->with('success', 'Donor added successfully');
-    }
-
     private function updateLifelinePoints(Donor $donor)
     {
         // Retrieve the donor's total donations
-        $totalDonations = $donor->donations->count();
+        $totalDonations = $donor->donations->count(); 
 
         // Determine the tier based on the total donations
         $tier = $this->getTier($totalDonations);
@@ -112,27 +135,5 @@ class BloodBankDashboardController extends Controller
         }
     }
 
-    public function showAllDonors()
-    {
-        $donors = Donor::all();
-        return view('blood.all_donors', compact('donors'));
-    }
-
-    public function showDonorDetails($id)
-    {
-        $donor = Donor::findOrFail($id);
-        $totalDonations = $donor->donations->count();
-        $estimatedTier = $this->getTier($totalDonations);
-        return view('blood.donor_details', compact('donor', 'totalDonations', 'estimatedTier'));
-    }
-
-    public function searchDonors(Request $request)
-    {
-        $query = $request->input('query');
-        $donors = Donor::where('full_name', 'like', "%$query%")
-            ->orWhere('email', 'like', "%$query%")
-            ->orWhere('blood_type', 'like', "%$query%")
-            ->get();
-        return view('blood.search_donors', compact('donors', 'query'));
-    }
+    
 }

@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class BloodBankEvent extends Model
 {
-    protected $fillable = ['name', 'date', 'event_time', 'location'];
+    protected $fillable = ['name', 'date', 'event_time', 'location', 'description'];
+
+    protected $casts = [
+        'event_time' => 'datetime:H:i', 
+    ];
 
     public function donorEvents()
     {

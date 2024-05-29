@@ -8,8 +8,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- AdminLTE CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
+    <!-- Google Font: Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <!-- Custom CSS -->
     @yield('css')
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .main-header .nav-link img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        .brand-link .brand-text {
+            font-weight: 300;
+        }
+        .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .content-header h1 {
+            font-weight: 500;
+        }
+        .nav-sidebar .nav-link p {
+            font-weight: 400;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -35,7 +60,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    <img src="user_profile.jpg" alt="Profile" class="img-circle elevation-2" style="width: 30px; height: 30px;">
+                    <img src="user_profile.jpg" alt="Profile" class="img-circle elevation-2">
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <span class="dropdown-item dropdown-header">Profile</span>
@@ -82,33 +107,43 @@
                         <p>Manage Donors <i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <!-- Add Donor -->
-<li class="nav-item">
-    <a href="{{ route('blood.bank.add.donor.form') }}" class="nav-link">
-        <i class="nav-icon fas fa-user-plus"></i>
-        <p>Add Donor</p>
-    </a>
-</li>
-
-<!-- All Donors -->
-<li class="nav-item">
-    <a href="{{ route('blood.bank.donors') }}" class="nav-link">
-        <i class="nav-icon fas fa-users"></i>
-        <p>All Donors</p>
-    </a>
-</li>
-
-<!-- Search Donors -->
-<li class="nav-item">
-    <a href="{{ route('blood.bank.search.donors') }}" class="nav-link">
-        <i class="nav-icon fas fa-search"></i>
-        <p>Search Donors</p>
-    </a>
-</li>
-
+                        <!-- View Donors List -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-list"></i>
+                                <p>View Donors List</p>
+                            </a>
+                        </li>
+                        <!-- Search Donors -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-search"></i>
+                                <p>Search Donors</p>
+                            </a>
+                        </li>
+                        <!-- Filter Donors -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-filter"></i>
+                                <p>Filter Donors</p>
+                            </a>
+                        </li>
+                        <!-- View Donor Details -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-info-circle"></i>
+                                <p>View Donor Details</p>
+                            </a>
+                        </li>
+                         <!-- Reward Management -->
+                <li class="nav-item">
+                    <a href="{{ route('reward_management.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-gift"></i>
+                        <p>Reward Management</p>
+                    </a>
+                </li>
                     </ul>
                 </li>
-                        
                 <li class="nav-item">
                     <a href="{{ route('blood.manage_inventory') }}" class="nav-link{{ Request::is('blood/manage-inventory') ? ' active' : '' }}">
                         <i class="nav-icon fas fa-boxes"></i>
@@ -131,12 +166,6 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-bullhorn"></i>
                         <p>Campaign Management</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-chart-bar"></i>
-                        <p>Reporting and Analytics<>
                     </a>
                 </li>
             </ul>
@@ -171,7 +200,7 @@
         <div class="float-right d-none d-sm-inline">
             Blood Bank Management System
         </div>
-        <strong>&copy; 2024 <a href="#">Blood Bank</a>.</strong> All rights reserved.
+        <strong>&copy; 2024 <a href="{{ route('blood.bank.dashboard') }}">Blood Bank</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->

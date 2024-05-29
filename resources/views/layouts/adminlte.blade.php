@@ -4,10 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Blood Donation Network')</title>
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- AdminLTE CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Google Font: Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .brand-link .brand-text {
+            font-weight: 300;
+        }
+        .main-header .nav-link {
+            font-weight: 400;
+        }
+        .nav-sidebar .nav-link p {
+            font-weight: 400;
+        }
+    </style>
     @yield('styles')
 </head>
 <body class="hold-transition sidebar-mini">
@@ -23,15 +42,13 @@
             </ul>
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-            <ul class="navbar-nav ml-auto">
-        <!-- Logout form/button -->
-        <li class="nav-item">
-            <form action="{{ route('logout') }}" method="post">
-                @csrf
-                <button type="submit" class="nav-link">Logout</button>
-            </form>
-        </li>
-    </ul>
+                <!-- Logout form/button -->
+                <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="nav-link btn btn-link">Logout</button>
+                    </form>
+                </li>
             </ul>
         </nav>
 
@@ -41,47 +58,44 @@
             <a href="{{ route('donor.dashboard') }}" class="brand-link">
                 <span class="brand-text font-weight-light">Blood Donation</span>
             </a>
-            
-        <!-- Sidebar Menu -->
-<nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-    <li class="nav-item">
-            <a href="{{ route('donor.dashboard') }}" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i> 
-                <p>Donor Dashboard</p>
-            </a>
-        </li>
-        <!-- Schedule Appointments Menu Item -->
-<li class="nav-item">
-<a href="{{ route('schedule_appointment') }}" class="nav-link">
-    <i class="nav-icon fas fa-calendar-plus"></i>
-    <p>Schedule Appointments</p>
-</a>
 
-</li>
-        <!-- View Upcoming Events Menu Item -->
-<li class="nav-item">
-    <a href="{{ route('donors.list_upcoming') }}" class="nav-link">
-        <i class="nav-icon fas fa-calendar-alt"></i>
-        <p>Upcoming Events</p>
-    </a>
-</li>
- <!-- Lifeline Points Menu Item -->
- <li class="nav-item">
-    <a href="{{ route('lifeline_points') }}" class="nav-link">
-        <i class="nav-icon fas fa-heartbeat"></i>
-        <p>Lifeline Points</p>
-    </a>
-</li>
-</ul>
-</nav>
-<!-- /.sidebar-menu -->
-
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <li class="nav-item">
+                        <a href="{{ route('donor.dashboard') }}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i> 
+                            <p>Donor Dashboard</p>
+                        </a>
+                    </li>
+                    <!-- Schedule Appointments Menu Item -->
+                    <li class="nav-item">
+                        <a href="{{ route('schedule_appointment') }}" class="nav-link">
+                            <i class="nav-icon fas fa-calendar-plus"></i>
+                            <p>Schedule Appointments</p>
+                        </a>
+                    </li>
+                    <!-- View Upcoming Events Menu Item -->
+                    <li class="nav-item">
+                        <a href="{{ route('donors.list_upcoming') }}" class="nav-link">
+                            <i class="nav-icon fas fa-calendar-alt"></i>
+                            <p>Upcoming Events</p>
+                        </a>
+                    </li>
+                    <!-- Lifeline Points Menu Item -->
+                    <li class="nav-item">
+                        <a href="{{ route('lifeline_points') }}" class="nav-link">
+                            <i class="nav-icon fas fa-heartbeat"></i>
+                            <p>Lifeline Points</p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-          
             <div class="content-header">
                 <div class="container-fluid">
                     @yield('content_header')
@@ -98,11 +112,12 @@
 
         <!-- Main Footer -->
         <footer class="main-footer">
-           
         </footer>
     </div>
 
+    <!-- AdminLTE App -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/js/adminlte.min.js"></script>
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @yield('scripts')

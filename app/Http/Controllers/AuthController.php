@@ -36,6 +36,7 @@ class AuthController extends Controller
 
         return redirect()->route('donor.dashboard');
     }
+    
     public function showLoginForm()
     {
         if (Auth::guard('donor')->check()) {
@@ -44,21 +45,22 @@ class AuthController extends Controller
         return view('login');
     }
     
-public function processLogin(Request $request)
-{
-    $credentials = $request->only('email', 'password');
+    public function processLogin(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-    if (Auth::guard('donor')->attempt($credentials)) {
-        return redirect()->route('donor.dashboard');
+        if (Auth::guard('donor')->attempt($credentials)) {
+            return redirect()->route('donor.dashboard');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
-    return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ]);
-}
 
-public function logout()
-{
-    Auth::guard('donor')->logout();
-    return redirect()->route('login');
-}
+    public function logout()
+    {
+        Auth::guard('donor')->logout();
+        return redirect()->route('login');
+    }
 }

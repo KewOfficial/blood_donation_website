@@ -43,6 +43,10 @@ return [
             'driver' => 'session',
             'provider' => 'donors',
         ],
+        'admin' => [
+            'driver' => 'session', 
+            'provider' => 'admins',
+        ]
     ],
     
 
@@ -72,6 +76,10 @@ return [
         'donors' => [
             'driver' => 'eloquent',
             'model' => App\Models\Donor::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class, 
         ],
     
 

@@ -60,7 +60,7 @@
 <body>
 
 <div class="container">
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register.submit') }}">
         @csrf
         <h2>Register for Blood Donation</h2>
         <div class="form-group">
@@ -80,6 +80,12 @@
             <select id="blood_type" name="blood_type" required>
                 <option value="A+">A+</option>
                 <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
             </select>
         </div>
         <div class="form-group">

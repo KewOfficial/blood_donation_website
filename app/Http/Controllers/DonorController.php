@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Donor;
 use App\Models\Appointment;
+use App\Models\BloodBankEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\EarningPerformance;
-use App\Models\BloodBankEvent;
 
 class DonorController extends Controller
 {
@@ -15,7 +13,6 @@ class DonorController extends Controller
     {
         $donor = auth()->user();
 
-        // Prepare donor information
         $donorInformation = [
             'name' => $donor->full_name,
             'email' => $donor->email,
@@ -24,11 +21,16 @@ class DonorController extends Controller
             'tier' => $this->calculateTier($donor->total_points),
         ];
 
-        // Fetch upcoming blood bank events
+        $appointments = Appointment::where('donor_id', $donor->id)
+            ->whereDate('appointment_date', '>=', now())
+            ->orderBy('appointment_date')
+            ->orderBy('appointment_time')
+            ->get();
+
+        // Fetch blood bank events
         $bloodBankEvents = BloodBankEvent::where('date', '>=', now())->get();
 
-        // Pass data to the view
-        return view('donors.donor_dashboard', compact('donorInformation', 'bloodBankEvents'));
+        return view('donors.donor_dashboard', compact('appointments', 'donorInformation', 'bloodBankEvents'));
     }
     private function calculateTier($totalPoints)
     {
@@ -40,27 +42,28 @@ class DonorController extends Controller
             return 'Bronze';
         }
     }
+
     public function scheduleAppointment()
     {
         return view('donors.schedule_appointment');
     }
-
     public function submitAppointment(Request $request)
-    {
-        // Validate the form data
-        $validated = $request->validate([
-            'appointment_date' => 'required|date',
-            'appointment_time' => 'required|date_format:H:i', 
-        ]);
-        $appointment_datetime = $validated['appointment_date'] . ' ' . $validated['appointment_time'];
-    
-        // Create a new appointment instance
-        $appointment = new Appointment();
-        $appointment->donor_id = auth()->id(); 
-        $appointment->appointment_datetime = $appointment_datetime;
-        $appointment->status = 'pending'; 
-        $appointment->notes = 'Created from web form'; 
-        $appointment->save();
-        return redirect()->route('donors.schedule_appointment')->with('success', 'Appointment scheduled successfully');
-    }    
+{
+    $validatedData = $request->validate([
+        'appointment_date' => 'required|date',
+        'appointment_time' => 'required',
+    ]);
+
+    // Get the authenticated donor's ID
+    $donorId = auth()->user()->id;
+
+    Appointment::create([
+        'donor_id' => $donorId,
+        'appointment_date' => $validatedData['appointment_date'],
+        'appointment_time' => $validatedData['appointment_time'],
+    ]);
+
+    return redirect()->route('donor.dashboard')->with('success', 'Appointment scheduled successfully');
+}
+
 }

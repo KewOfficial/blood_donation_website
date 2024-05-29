@@ -1,117 +1,55 @@
 @extends('layouts.adminlte')
 
-@section('title', 'Schedule Blood Donation')
-
-@section('content_header')
-    <h1>Schedule Blood Donation</h1>
-@stop
-
 @section('content')
-    <div class="card">
-        <div class="card-body">
-        <form id="appointmentForm" method="POST" action="{{ route('donors.schedule_appointment.submit') }}">
-                @csrf <!-- CSRF Token -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card" style="width: 100%; margin: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                <div class="card-header" style="background: linear-gradient(to right, #4e54c8, #8f94fb); color: #fff; border-top-left-radius: 10px; border-top-right-radius: 10px; padding: 15px;">{{ __('Schedule Appointment') }}</div>
 
-                <div class="form-group">
-                    <label for="date" class="form-label">Select Your Donation Date:</label>
-                    <input type="date" class="form-control" id="date" name="appointment_date" required>
+                <div class="card-body" style="padding: 20px;">
+                    <form method="POST" action="{{ route('submit_appointment') }}">
+                        @csrf
+
+                        <div class="form-group row">
+                            <label for="appointment_date" class="col-md-4 col-form-label text-md-right" style="font-size: 16px;">{{ __('Appointment Date') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="appointment_date" type="date" class="form-control @error('appointment_date') is-invalid @enderror" name="appointment_date" value="{{ old('appointment_date') }}" required autocomplete="appointment_date" style="border-radius: 5px;">
+
+                                @error('appointment_date')
+                                    <span class="invalid-feedback" role="alert" style="font-size: 14px;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="appointment_time" class="col-md-4 col-form-label text-md-right" style="font-size: 16px;">{{ __('Appointment Time') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="appointment_time" type="time" class="form-control @error('appointment_time') is-invalid @enderror" name="appointment_time" value="{{ old('appointment_time') }}" required autocomplete="appointment_time" style="border-radius: 5px;">
+
+                                @error('appointment_time')
+                                    <span class="invalid-feedback" role="alert" style="font-size: 14px;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary" style="font-size: 18px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                                    {{ __('Schedule Appointment') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="form-group">
-                    <label for="time" class="form-label">Select Your Donation Time:</label>
-                    <select class="form-control" id="time" name="appointment_time" required>
-                        <option value="">Select Time</option>
-                    </select>
-                </div>
-
-                <button type="submit" id="scheduleButton" class="btn btn-primary" onclick="scheduleAppointment()">Schedule My Donation</button>
-                <div id="formMessage" class="mt-3"></div> 
-            </form>
+            </div>
         </div>
     </div>
-@stop
-
-@section('styles')
-    @parent
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> <!-- Flatpickr CSS -->
-    <style>
-        .card {
-            margin-top: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            font-weight: bold;
-            color: #230CF3;
-        }
-    </style>
-@stop
-
-@section('scripts')
-<!-- Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            flatpickr('#date', {
-                dateFormat: 'Y-m-d',
-                minDate: 'today'
-            });
-
-            // Form submission handling
-            document.getElementById('appointmentForm').addEventListener('submit', function (event) {
-                event.preventDefault();
-                const form = this;
-                const formData = new FormData(form);
-
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    },
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data);
-                    displayMessage('success', 'Appointment Scheduled Successfully!');
-                    form.reset(); 
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    displayMessage('error', 'Error scheduling appointment. Please try again.');
-                });
-            });
-
-            // Function to display success/error messages
-            function displayMessage(type, message) {
-                const formMessage = document.getElementById('formMessage');
-                formMessage.innerHTML = `<div class="alert alert-${type}" role="alert">${message}</div>`;
-            }
-        });
-        document.addEventListener('DOMContentLoaded', function () {
-    const timeSelect = document.getElementById('time');
-    const startTime = 8;
-    const endTime = 17; 
-
-    for (let hour = startTime; hour < endTime; hour++) {
-        const formattedHour = hour.toString().padStart(2, '0'); 
-        const displayHour = hour > 12 ? hour - 12 : hour; 
-        const meridiem = hour >= 12 ? 'PM' : 'AM'; 
-
-        const option = document.createElement('option');
-        option.value = formattedHour + ':00'; 
-        option.textContent = displayHour + ':00 ' + meridiem; 
-
-        timeSelect.appendChild(option); 
-}
-});
-    </script>
-@stop
+</div>
+@endsection
