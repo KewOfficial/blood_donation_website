@@ -1,26 +1,18 @@
 <?php
-
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
     protected $fillable = [
-        'user_id',
-        'donor_id',
-        'event_id',
-        'type',
-        'status',
+        'donor_id', 
+        'message', 
+        'is_read'
     ];
 
-    public function donor()
+    public function user()
     {
         return $this->belongsTo(Donor::class);
-    }
-
-    public function event()
-    {
-        return $this->belongsTo(Event::class);
     }
 }

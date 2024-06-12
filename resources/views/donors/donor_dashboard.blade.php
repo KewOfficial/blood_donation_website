@@ -22,13 +22,12 @@
 <div class="row">
     <!-- Donor Profile Section -->
     <div class="col-md-12 mb-4">
-        <div class="card">
+        <div class="card rounded">
             <div class="card-header bg-info text-white">
                 <h3 class="card-title">Donor Profile</h3>
             </div>
             <div class="card-body">
                 <a href="{{ route('schedule_appointment') }}" class="btn btn-info">Schedule Appointment</a>
-                <!-- Button for Reward Claim -->
                 @if ($donorInformation['tier'] === 'Bronze' || $donorInformation['tier'] === 'Silver' || $donorInformation['tier'] === 'Gold')
                     <a href="{{ route('claim_reward') }}" class="btn btn-success">Claim Reward</a>
                 @endif
@@ -38,6 +37,52 @@
 </div>
 
 <div class="row">
-    <!-- Additional Content Here -->
+    <!-- Notifications Section -->
+    <div class="col-md-12 mb-4">
+        <div class="card rounded">
+            <div class="card-header bg-warning text-white">
+                <h3 class="card-title">Notifications</h3>
+            </div>
+            <div class="card-body">
+                @if($notifications->isEmpty())
+                    <p>No new notifications.</p>
+                @else
+                    <ul class="list-group">
+                        @foreach($notifications as $notification)
+                            <li class="list-group-item {{ $notification->is_read ? 'list-group-item-light' : 'list-group-item-info' }}">
+                                {{ $notification->message }}
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Appointments Section -->
+    <div class="col-md-12 mb-4">
+        <div class="card rounded">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title">Your Appointments</h3>
+            </div>
+            <div class="card-body">
+                @if($appointments->isEmpty())
+                    <p>No upcoming appointments.</p>
+                @else
+                    <ul class="list-group">
+                        @foreach($appointments as $appointment)
+                            <li class="list-group-item">
+                                <strong>Date:</strong> {{ $appointment->appointment_date }}<br>
+                                <strong>Time:</strong> {{ $appointment->appointment_time }}<br>
+                                <strong>Status:</strong> {{ $appointment->status ?? 'Pending' }}
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+        </div>
+    </div>
 </div>
 @stop

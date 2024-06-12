@@ -11,6 +11,9 @@
     <!-- Google Font: Roboto -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <!-- Custom CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
     @yield('css')
     <style>
         body {
@@ -107,13 +110,20 @@
                         <p>Manage Donors <i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <!-- View Donors List -->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-list"></i>
-                                <p>View Donors List</p>
-                            </a>
-                        </li>
+                       <!-- View Donors List -->
+<li class="nav-item">
+    <a href="{{ route('donors.list') }}" class="nav-link">
+        <i class="nav-icon fas fa-list"></i>
+        <p>View Donors List</p>
+    </a>
+</li>
+<!-- Record Blood Donation -->
+<li class="nav-item">
+    <a href="{{ route('donation.record_form') }}" class="nav-link">
+        <i class="nav-icon fas fa-tint"></i>
+        <p>Record Blood Donation</p>
+    </a>
+</li>
                         <!-- Search Donors -->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -121,20 +131,20 @@
                                 <p>Search Donors</p>
                             </a>
                         </li>
-                        <!-- Filter Donors -->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-filter"></i>
-                                <p>Filter Donors</p>
-                            </a>
-                        </li>
-                        <!-- View Donor Details -->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-info-circle"></i>
-                                <p>View Donor Details</p>
-                            </a>
-                        </li>
+                       <!-- Filter Donors -->
+<li class="nav-item">
+    <a href="{{ route('filter_donors') }}" class="nav-link">
+        <i class="nav-icon fas fa-filter"></i>
+        <p>Filter Donors</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('appointments.list') }}" class="nav-link{{ Request::is('appointments') ? ' active' : '' }}">
+        <i class="nav-icon fas fa-calendar-alt"></i>
+        <p>View All Appointments</p>
+    </a>
+</li>
+
                          <!-- Reward Management -->
                 <li class="nav-item">
                     <a href="{{ route('reward_management.index') }}" class="nav-link">

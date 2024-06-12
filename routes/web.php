@@ -10,6 +10,7 @@ use App\Http\Controllers\BloodBankEventController;
 use App\Http\Controllers\LifelinePointsController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\RewardManagementController;
+use App\Http\Controllers\DonationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::get('/', function () {
 // Registration Routes
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'processRegistration']);
+Route::post('/register-submit', [AuthController::class, 'submitRegistration'])->name('register.submit');
 
 // Login Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -81,3 +83,14 @@ Route::post('/reward-tiers', [RewardManagementController::class, 'storeTier'])->
 Route::put('/reward-tiers/{id}', [RewardManagementController::class, 'updateTier'])->name('reward_tiers.update');
 Route::delete('/reward-tiers/{id}', [RewardManagementController::class, 'destroyTier'])->name('reward_tiers.destroy');
 Route::post('/points/update', [RewardManagementController::class, 'updateLifelinePoints'])->name('points.update');
+Route::get('/donors-list', [RewardManagementController::class, 'donorsList'])->name('donors.list');
+Route::get('/filter-donors', [RewardManagementController::class, 'filterDonors'])->name('filter_donors');
+//donation records
+Route::get('/blood/donor_management/record', [DonationController::class, 'recordBloodDonationForm'])->name('donation.record_form');
+Route::post('/blood/donation/record', [DonationController::class, 'recordBloodDonation'])->name('blood.donation.record');
+Route::get('/donor/details', [DonationController::class, 'getDonorDetails'])->name('donor.details');
+
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/appointments', [BloodBankDashboardController::class, 'listAppointments'])->name('appointments.list');
+    Route::match(['post', 'patch'], '/appointments/{appointment}/confirm', [BloodBankDashboardController::class, 'confirmAppointment'])->name('appointments.confirm');
+});

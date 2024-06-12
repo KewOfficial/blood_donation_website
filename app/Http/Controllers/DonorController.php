@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\BloodBankEvent;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,11 +28,19 @@ class DonorController extends Controller
             ->orderBy('appointment_time')
             ->get();
 
-        // Fetch blood bank events
         $bloodBankEvents = BloodBankEvent::where('date', '>=', now())->get();
 
-        return view('donors.donor_dashboard', compact('appointments', 'donorInformation', 'bloodBankEvents'));
+        // Fetch notifications
+        $notifications = Notification::where('donor_id', $donor->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Mark notifications as read
+        Notification::where('donor_id', $donor->id)->update(['is_read' => true]);
+
+        return view('donors.donor_dashboard', compact('appointments', 'donorInformation', 'bloodBankEvents', 'notifications'));
     }
+
     private function calculateTier($totalPoints)
     {
         if ($totalPoints >= 10) {
@@ -47,23 +56,22 @@ class DonorController extends Controller
     {
         return view('donors.schedule_appointment');
     }
+
     public function submitAppointment(Request $request)
-{
-    $validatedData = $request->validate([
-        'appointment_date' => 'required|date',
-        'appointment_time' => 'required',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'appointment_date' => 'required|date',
+            'appointment_time' => 'required',
+        ]);
 
-    // Get the authenticated donor's ID
-    $donorId = auth()->user()->id;
+        $donorId = auth()->user()->id;
 
-    Appointment::create([
-        'donor_id' => $donorId,
-        'appointment_date' => $validatedData['appointment_date'],
-        'appointment_time' => $validatedData['appointment_time'],
-    ]);
+        Appointment::create([
+            'donor_id' => $donorId,
+            'appointment_date' => $validatedData['appointment_date'],
+            'appointment_time' => $validatedData['appointment_time'],
+        ]);
 
-    return redirect()->route('donor.dashboard')->with('success', 'Appointment scheduled successfully');
-}
-
+        return redirect()->route('donor.dashboard')->with('success', 'Appointment scheduled successfully');
+    }
 }

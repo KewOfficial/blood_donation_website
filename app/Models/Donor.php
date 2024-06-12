@@ -14,7 +14,7 @@ class Donor extends Model implements Authenticatable
 
     protected $fillable = ['full_name', 'email', 'phone', 'blood_type', 'password', 'unique_id', 'total_points', 'donation_count', 'status', 'reward_tier_id'];
 
-    public function donations(): HasMany
+    public function donations()
     {
         return $this->hasMany(Donation::class);
     }

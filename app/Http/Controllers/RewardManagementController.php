@@ -39,21 +39,16 @@ class RewardManagementController extends Controller
 
        
         $donor = Donor::findOrFail($validated['donor_id']);
-
-        // Calculate the tier and points to add based on total donations
         $totalDonations = $validated['total_donations'];
         $tier = $this->getTier($totalDonations);
         $pointsToAdd = $this->calculatePointsToAdd($tier);
 
-        // Update the donor's total points
         $donor->total_points += $pointsToAdd;
         $donor->save();
 
-        // Redirect back to the reward management page with a success message
         return redirect()->route('reward_management.index')->with('success', 'Points updated successfully for donor ID ' . $donor->id);
     }
 
-    // Helper method to determine the tier based on total donations
     private function getTier($totalDonations)
     {
         if ($totalDonations >= 10) {
@@ -64,8 +59,6 @@ class RewardManagementController extends Controller
             return 'Bronze';
         }
     }
-
-    // Helper method to calculate points to add based on tier
     private function calculatePointsToAdd($tier)
     {
         switch ($tier) {
@@ -127,8 +120,40 @@ public function updateTier(Request $request, $id)
 
     return redirect()->route('reward_management.index')->with('success', 'Reward tier updated successfully');
 }
+public function donorsList()
+{
+    $donors = Donor::select('full_name', 'email', 'phone', 'blood_type', 'donation_count')->get();
+    return view('blood.donor_management.donors_list', compact('donors'));
+}
+public function filterDonors(Request $request)
+    {
+        $donationStatus = $request->input('donation_status');
+        $bloodType = $request->input('blood_type');
+        $donationCount = $request->input('donation_count');
 
+        $query = Donor::query();
 
+        if ($donationStatus) {
+            if ($donationStatus === 'donated') {
+                $query->whereHas('donations');
+            } elseif ($donationStatus === 'not_donated') {
+                $query->whereDoesntHave('donations');
+            }
+        }
 
+        if ($bloodType) {
+            $query->where('blood_type', $bloodType);
+        }
 
+        if ($donationCount) {
+            $query->where('donation_count', '>=', $donationCount);
+        }
+
+       
+        $filteredDonors = $query->select('full_name', 'email', 'phone', 'blood_type', 'donation_count')->get();
+
+       
+        return view('blood.donor_management.filter_donors', compact('filteredDonors'));
+    }
+    
 }

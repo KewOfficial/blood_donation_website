@@ -34,22 +34,41 @@
                 </div>
                 <div class="card-body">
                     <ul>
-                        @if ($donorInformation['tier'] === 'Bronze')
-                            <li><i class="fas fa-check"></i> Earn points for each donation.</li>
-                            <li><i class="fas fa-check"></i> Free basic health checkup voucher after 2nd donation.</li>
-                            <li><i class="fas fa-check"></i> Recognition on the donor portal.</li>
-                        @elseif ($donorInformation['tier'] === 'Silver')
-                            @include('partials.bronze_rewards')
-                            <li><i class="fas fa-check"></i> Increased points per donation.</li>
-                            <li><i class="fas fa-check"></i> $20 cash reward upon reaching 5th donation.</li>
-                            <li><i class="fas fa-check"></i> Featured as "Donor of the Week" on social media with a personalized message.</li>
-                        @elseif ($donorInformation['tier'] === 'Gold')
-                            @include('partials.bronze_rewards')
-                            @include('partials.silver_rewards')
-                            <li><i class="fas fa-check"></i> Highest points per donation.</li>
-                            <li><i class="fas fa-check"></i> $50 cash reward upon reaching 10th donation.</li>
-                            <li><i class="fas fa-check"></i> Featured as "Donor of the Month" on the website with a photo and story.</li>
-                            <li><i class="fas fa-check"></i> Discounted comprehensive health checkup voucher.</li>
+                        @php
+                            $bronzeRewards = [
+                                'Earn points for each donation.',
+                                'Free basic health checkup voucher after 2nd donation.',
+                                'Recognition on the donor portal.'
+                            ];
+                            
+                            $silverRewards = [
+                                'Increased points per donation.',
+                                '$20 cash reward upon reaching 5th donation.',
+                                'Featured as "Donor of the Week" on social media with a personalized message.'
+                            ];
+                            
+                            $goldRewards = [
+                                'Highest points per donation.',
+                                '$50 cash reward upon reaching 10th donation.',
+                                'Featured as "Donor of the Month" on the website with a photo and story.',
+                                'Discounted comprehensive health checkup voucher.'
+                            ];
+                        @endphp
+                        
+                        @foreach ($bronzeRewards as $reward)
+                            <li><i class="fas fa-check"></i> {{ $reward }}</li>
+                        @endforeach
+                        
+                        @if ($donorInformation['tier'] === 'Silver' || $donorInformation['tier'] === 'Gold')
+                            @foreach ($silverRewards as $reward)
+                                <li><i class="fas fa-check"></i> {{ $reward }}</li>
+                            @endforeach
+                        @endif
+                        
+                        @if ($donorInformation['tier'] === 'Gold')
+                            @foreach ($goldRewards as $reward)
+                                <li><i class="fas fa-check"></i> {{ $reward }}</li>
+                            @endforeach
                         @endif
                     </ul>
                 </div>

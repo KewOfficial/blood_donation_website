@@ -7,45 +7,55 @@ use App\Models\BloodBankEvent;
 use App\Models\BloodUnit;
 use App\Models\Donor;
 use App\Models\Appointment;
+use App\Models\Notification;
 
 
 class BloodBankDashboardController extends Controller
 {
     public function index()
-{
-    // Fetch all blood bank events
-    $bloodBankEvents = BloodBankEvent::all();
-
-    // Fetch all donors
-    $donors = Donor::all();
-
-    // Fetch scheduled appointments
-    $appointments = Appointment::whereDate('appointment_date', '>=', now())
-                                ->orderBy('appointment_time')
-                                ->get();
-
-    // Calculate blood inventory
-    $bloodTypes = BloodUnit::distinct()->pluck('blood_type')->toArray();
-    $rhFactors = BloodUnit::distinct()->pluck('rh_factor')->toArray();
-    $bloodInventory = [];
-
-    foreach ($bloodTypes as $bloodType) {
-        $bloodInventory[$bloodType] = [];
-        foreach ($rhFactors as $rhFactor) {
-            $totalUnits = BloodUnit::where('blood_type', $bloodType)
-                ->where('rh_factor', $rhFactor)
-                ->sum('units');
-
-            if ($totalUnits > 0) {
-                $bloodInventory[$bloodType][$rhFactor] = $totalUnits;
+    {
+        // Fetch all blood bank events
+        $bloodBankEvents = BloodBankEvent::all();
+    
+        // Fetch all donors
+        $donors = Donor::all();
+    
+        // Fetch scheduled appointments
+        $appointments = Appointment::whereDate('appointment_date', '>=', now())
+                                    ->orderBy('appointment_time')
+                                    ->get();
+    
+        // Calculate blood inventory
+        $bloodTypes = BloodUnit::distinct()->pluck('blood_type')->toArray();
+        $rhFactors = BloodUnit::distinct()->pluck('rh_factor')->toArray();
+        $bloodInventory = [];
+    
+        foreach ($bloodTypes as $bloodType) {
+            $bloodInventory[$bloodType] = [];
+            foreach ($rhFactors as $rhFactor) {
+                $totalUnits = BloodUnit::where('blood_type', $bloodType)
+                                        ->where('rh_factor', $rhFactor)
+                                        ->sum('units');
+    
+                if ($totalUnits > 0) {
+                    $bloodInventory[$bloodType][$rhFactor] = $totalUnits;
+                }
             }
         }
+    
+        $totalUnits = collect($bloodInventory)->flatten()->sum();
+    
+        
+        $topDonors = Donor::withCount('donations')
+                          ->orderBy('donations_count', 'desc')
+                          ->take(4)
+                          ->get();
+    
+        
+        return view('blood.blood_bank_dashboard', compact('bloodBankEvents', 'donors', 'appointments', 'totalUnits', 'topDonors'));
     }
+    
 
-    $totalUnits = collect($bloodInventory)->flatten()->sum();
-
-    return view('blood.blood_bank_dashboard', compact('bloodBankEvents', 'donors', 'appointments', 'totalUnits'));
-}
 public function viewUpcomingEvents()
 {
     $bloodBankEvents = BloodBankEvent::where('date', '>=', now())->get();
@@ -72,6 +82,10 @@ public function viewUpcomingEvents()
         }
     
         $totalUnitsAll = collect($bloodInventory)->flatten()->sum();
+        $topDonors = Donor::withCount('donations')
+                      ->orderBy('donations_count', 'desc')
+                      ->take(4)
+                      ->get();
     
         return view('blood.manage_inventory', compact('bloodInventory', 'totalUnitsAll'));
     }
@@ -109,18 +123,16 @@ public function viewUpcomingEvents()
         // Update the donor's Lifeline Points based on the tier
         switch ($tier) {
             case 'Bronze':
-                $donor->total_points += 1; // Update points for Bronze tier
+                $donor->total_points += 1; 
                 break;
             case 'Silver':
-                $donor->total_points += 2; // Update points for Silver tier
+                $donor->total_points += 2; 
                 break;
             case 'Gold':
-                $donor->total_points += 3; // Update points for Gold tier
+                $donor->total_points += 3; 
                 break;
-            // Add more cases for additional tiers if needed
+            
         }
-
-        // Save the updated donor
         $donor->save();
     }
 
@@ -133,7 +145,29 @@ public function viewUpcomingEvents()
         } else {
             return 'Bronze';
         }
+        
     }
+    public function listAppointments()
+    {
+        // Fetch all appointments
+        $appointments = Appointment::with('donor')->get();
 
+        return view('blood.donor_management.appointments_list', compact('appointments'));
+    }
+    public function confirmAppointment(Appointment $appointment)
+    {
+        $appointment->update(['status' => 'Confirmed']);
     
+        $donorName = $appointment->donor->full_name;
+    
+        Notification::create([
+            'donor_id' => $appointment->donor_id,
+            'message' => "Dear $donorName, thank you for scheduling your appointment. We are pleased to inform you that your appointment on " . $appointment->appointment_date . ' at ' . $appointment->appointment_time . ' has been confirmed.',
+            'is_read' => false,
+        ]);
+    
+        return redirect()->route('appointments.list')->with('success', 'Appointment confirmed successfully.');
+    }
+    
+
 }
