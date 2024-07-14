@@ -13,30 +13,31 @@ class AuthController extends Controller
     {
         return view('registration');
     }
-
     public function processRegistration(Request $request)
-    {
-        $request->validate([
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:donors,email',
-            'phone' => 'required|string|max:255',
-            'blood_type' => 'required|string|max:3',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+{
+    $request->validate([
+        'full_name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:donors,email',
+        'phone' => 'required|string|max:255',
+        'blood_type' => 'required|string|max:3',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
 
-        $donor = Donor::create([
-            'full_name' => $request->full_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'blood_type' => $request->blood_type,
-            'password' => Hash::make($request->password),
-        ]);
+    $donor = new Donor();
+    $donor->full_name = $request->full_name;
+    $donor->email = $request->email;
+    $donor->phone = $request->phone;
+    $donor->blood_type = $request->blood_type;
+    $donor->password = Hash::make($request->password);
+    $donor->status = 'active'; 
+    $donor->save();
 
-        Auth::guard('donor')->login($donor);
+    Auth::guard('donor')->login($donor);
 
-        return redirect()->route('donor.dashboard');
-    }
-    
+    return redirect()->route('donor.dashboard');
+}
+
+
     public function showLoginForm()
     {
         if (Auth::guard('donor')->check()) {
@@ -44,7 +45,7 @@ class AuthController extends Controller
         }
         return view('login');
     }
-    
+
     public function processLogin(Request $request)
     {
         $credentials = $request->only('email', 'password');

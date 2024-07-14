@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <!-- Custom CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
     @yield('css')
     <style>
@@ -92,66 +92,63 @@
                         <p>Dashboard Home</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('blood.bank.upcoming.events') }}" class="nav-link{{ Request::is('blood-bank/upcoming-events') ? ' active' : '' }}">
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-calendar"></i>
-                        <p>View Upcoming Events</p>
+                        <p>Events<i class="right fas fa-angle-left"></i></p>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('bloodbank.events.create') }}" class="nav-link{{ Request::is('bloodbank/events/create') ? ' active' : '' }}">
-                        <i class="nav-icon fas fa-calendar-plus"></i>
-                        <p>Create Event</p>
-                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('blood.bank.upcoming.events') }}" class="nav-link{{ Request::is('blood-bank/upcoming-events') ? ' active' : '' }}">
+                                <i class="nav-icon fas fa-calendar-alt"></i>
+                                <p>View Upcoming Events</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('bloodbank.events.create') }}" class="nav-link{{ Request::is('bloodbank/events/create') ? ' active' : '' }}">
+                                <i class="nav-icon fas fa-calendar-plus"></i>
+                                <p>Create Event</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user"></i>
-                        <p>Manage Donors <i class="right fas fa-angle-left"></i></p>
+                        <p>Manage Donors<i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
-                       <!-- View Donors List -->
-<li class="nav-item">
-    <a href="{{ route('donors.list') }}" class="nav-link">
-        <i class="nav-icon fas fa-list"></i>
-        <p>View Donors List</p>
-    </a>
-</li>
-<!-- Record Blood Donation -->
-<li class="nav-item">
-    <a href="{{ route('donation.record_form') }}" class="nav-link">
-        <i class="nav-icon fas fa-tint"></i>
-        <p>Record Blood Donation</p>
-    </a>
-</li>
-                        <!-- Search Donors -->
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-search"></i>
-                                <p>Search Donors</p>
+                            <a href="{{ route('donors.list') }}" class="nav-link">
+                                <i class="nav-icon fas fa-list"></i>
+                                <p>View Donors List</p>
                             </a>
                         </li>
-                       <!-- Filter Donors -->
-<li class="nav-item">
-    <a href="{{ route('filter_donors') }}" class="nav-link">
-        <i class="nav-icon fas fa-filter"></i>
-        <p>Filter Donors</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="{{ route('appointments.list') }}" class="nav-link{{ Request::is('appointments') ? ' active' : '' }}">
-        <i class="nav-icon fas fa-calendar-alt"></i>
-        <p>View All Appointments</p>
-    </a>
-</li>
-
-                         <!-- Reward Management -->
-                <li class="nav-item">
-                    <a href="{{ route('reward_management.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-gift"></i>
-                        <p>Reward Management</p>
-                    </a>
-                </li>
+                        <li class="nav-item">
+                            <a href="{{ route('donation.record_form') }}" class="nav-link">
+                                <i class="nav-icon fas fa-tint"></i>
+                                <p>Record Blood Donation</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="{{ route('filter_donors') }}" class="nav-link">
+                                <i class="nav-icon fas fa-filter"></i>
+                                <p>Filter Donors</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('appointments.list') }}" class="nav-link{{ Request::is('appointments') ? ' active' : '' }}">
+                                <i class="nav-icon fas fa-calendar-alt"></i>
+                                <p>View All Appointments</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('reward_management.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-gift"></i>
+                                <p>Reward Management</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -160,25 +157,7 @@
                         <p>Manage Inventory</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-chart-line"></i>
-                        <p>Analytics and Reporting</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-bell"></i>
-                        <p>Alerts and Notifications</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-bullhorn"></i>
-                        <p>Campaign Management</p>
-                    </a>
-                </li>
-            </ul>
+                            </ul>
         </nav>
         <!-- /.sidebar-menu -->
     </aside>

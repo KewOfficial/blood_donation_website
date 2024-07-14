@@ -14,4 +14,7 @@ class BloodUnit extends Model
         'units',
         'expiry_date',
     ];
+    protected $casts = [
+        'expiry_date' => 'datetime',
+    ];
 }

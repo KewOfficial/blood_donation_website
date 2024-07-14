@@ -7,6 +7,14 @@
 @stop
 
 @section('content')
+<style>
+    .profile-picture {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+</style>
+
 <div class="row">
     <!-- Welcome Section -->
     <div class="col-md-12 mb-4">
@@ -24,13 +32,19 @@
     <div class="col-md-12 mb-4">
         <div class="card rounded">
             <div class="card-header bg-info text-white">
-                <h3 class="card-title">Donor Profile</h3>
+                @if(Auth::guard('donor')->user()->profile_picture)
+                    <img src="{{ Storage::url(Auth::guard('donor')->user()->profile_picture) }}" alt="Profile Picture" class="img-thumbnail rounded-circle profile-picture">
+                @else
+                    <img src="{{ asset('dist/img/avatar2.png') }}" alt="Default Profile Picture" class="img-thumbnail rounded-circle profile-picture">
+                @endif
             </div>
             <div class="card-body">
-                <a href="{{ route('schedule_appointment') }}" class="btn btn-info">Schedule Appointment</a>
-                @if ($donorInformation['tier'] === 'Bronze' || $donorInformation['tier'] === 'Silver' || $donorInformation['tier'] === 'Gold')
-                    <a href="{{ route('claim_reward') }}" class="btn btn-success">Claim Reward</a>
-                @endif
+                <div class="mt-4">
+                    <a href="{{ route('schedule_appointment') }}" class="btn btn-info">Schedule Appointment</a>
+                    @if ($donorInformation['tier'] === 'Bronze' || $donorInformation['tier'] === 'Silver' || $donorInformation['tier'] === 'Gold')
+                        <a href="{{ route('claim_reward') }}" class="btn btn-success mt-2">Claim Reward</a>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
@@ -65,7 +79,7 @@
     <div class="col-md-12 mb-4">
         <div class="card rounded">
             <div class="card-header bg-success text-white">
-                <h3 class="card-title">Your Appointments</h3>
+                <h3 class="card-title">My Appointments</h3>
             </div>
             <div class="card-body">
                 @if($appointments->isEmpty())

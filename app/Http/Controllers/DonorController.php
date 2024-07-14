@@ -7,6 +7,8 @@ use App\Models\BloodBankEvent;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 
 class DonorController extends Controller
 {
@@ -74,4 +76,11 @@ class DonorController extends Controller
 
         return redirect()->route('donor.dashboard')->with('success', 'Appointment scheduled successfully');
     }
+
+    public function showProfile()
+    {
+        $donor = Auth::guard('donor')->user();
+        return view('donors.profile', compact('donor'));
+    }
+
 }

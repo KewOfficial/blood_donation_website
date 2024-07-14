@@ -3,19 +3,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeferralReasonsTable extends Migration
+class CreateHospitalsTable extends Migration
 {
     public function up()
     {
-        Schema::create('deferral_reasons', function (Blueprint $table) {
+        Schema::create('hospitals', function (Blueprint $table) {
             $table->id();
-            $table->string('reason');
+            $table->string('name')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('deferral_reasons');
+        Schema::dropIfExists('hospitals');
     }
 }

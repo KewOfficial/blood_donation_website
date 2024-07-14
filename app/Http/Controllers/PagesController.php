@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Donor;
 
 class PagesController extends Controller
@@ -70,4 +71,29 @@ class PagesController extends Controller
     {
         return 'DNR-' . strtoupper(uniqid());
     }
+    public function handleContactForm(Request $request)
+{
+    // Validate the form data
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone' => 'required|string|max:15',
+        'message' => 'required|string|max:500',
+    ]);
+
+    $data = [
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'phone' => $validated['phone'],
+        'user_message' => $validated['message'],
+    ];
+
+    Mail::send('emails.contact', $data, function($message) use ($data) {
+        $message->to('info@blooddonationnetwork.co.tz')
+                ->subject('New Contact Form Submission');
+    });
+
+    return redirect()->route('contact')->with('success', 'Your message has been sent successfully!');
+}
+
 }

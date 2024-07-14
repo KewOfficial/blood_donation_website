@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BloodBankEvent;
+use App\Models\Donor;
+use App\Models\Appointment;
 
 class BloodBankEventController extends Controller
 {
@@ -15,10 +17,18 @@ class BloodBankEventController extends Controller
     $bloodBankEvents = BloodBankEvent::where('date', '>=', now())->get();
     return view('dashboard', compact('bloodBankEvents'));
 }
-
+public function dashboard()
+{
+    $bloodBankEvents = BloodBankEvent::where('date', '>=', now())->get();
+    $totalUnits = BloodBankEvent::count(); 
+    $topDonors = Donor::withCount('donations')->orderBy('donations_count', 'desc')->take(5)->get();
+    $appointments = Appointment::all();
+    
+    return view('blood.blood_bank_dashboard', compact('bloodBankEvents', 'totalUnits', 'topDonors', 'appointments'));
+}
     public function store(Request $request)
     {
-        // Validate the request data
+       
         $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'required|date',
@@ -46,7 +56,7 @@ class BloodBankEventController extends Controller
 
     public function update(Request $request, BloodBankEvent $event)
     {
-        // Validate the request data
+       
         $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'required|date',
@@ -55,7 +65,7 @@ class BloodBankEventController extends Controller
             'description' => 'required|string',
         ]);
 
-        // Update the blood bank event
+    
         $event->update([
             'name' => $request->name,
             'date' => $request->date,

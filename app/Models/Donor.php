@@ -12,7 +12,7 @@ class Donor extends Model implements Authenticatable
 {
     use AuthenticatableTrait;
 
-    protected $fillable = ['full_name', 'email', 'phone', 'blood_type', 'password', 'unique_id', 'total_points', 'donation_count', 'status', 'reward_tier_id'];
+    protected $fillable = ['full_name', 'email', 'phone', 'blood_type', 'password','profile_picture', 'unique_id', 'total_points', 'donation_count', 'status', 'reward_tier_id'];
 
     public function donations()
     {

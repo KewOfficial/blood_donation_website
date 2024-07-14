@@ -8,6 +8,7 @@
 
 @section('content')
     <div class="container">
+        <div id="calendar"></div> <!-- Calendar container -->
         <div class="card shadow-sm mb-4">
             <div class="card-body">
                 @if($upcomingEvents->count() > 0)
@@ -35,8 +36,8 @@
 @stop
 
 @section('styles')
-    @parent 
-
+    @parent
+    <!-- Additional styles specific to the calendar -->
     <style>
         /* Typography and Layout */
         body {
@@ -83,7 +84,6 @@
             color: #007bff;
         }
 
-        /* Colors and Animations */
         .card-body {
             padding: 1.5rem;
             background-color: #f9f9f9;
@@ -106,5 +106,77 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        /* Additional styles specific to the calendar */
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
     </style>
+    
+    <!-- FullCalendar CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.min.css" rel='stylesheet' />
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.min.css" rel='stylesheet' />
 @stop
+
+@section('scripts')
+    @parent
+    
+    <!-- FullCalendar JavaScript via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction/main.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['dayGrid', 'interaction'], 
+                initialView: 'dayGridMonth', 
+                events: [
+                    @foreach($upcomingEvents as $event)
+                    {
+                        title: '{{ $event->name }}',
+                        start: '{{ $event->date }}', 
+                        description: '{{ $event->description }}',
+                        location: '{{ $event->location }}',
+                    },
+                    @endforeach
+                ],
+                eventClick: function(info) {
+                    var event = info.event;
+                    var eventDetails = `
+                        <h5>${event.title}</h5>
+                        <p><strong>Date:</strong> ${event.start.toLocaleDateString()}</p>
+                        <p><strong>Description:</strong> ${event.extendedProps.description}</p>
+                        <p><strong>Location:</strong> ${event.extendedProps.location}</p>
+                    `;
+                    $('#eventModal .modal-body').html(eventDetails);
+                    $('#eventModal').modal('show');
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+@stop
+
+<!-- Example modal to show event details -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Event details will be dynamically inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

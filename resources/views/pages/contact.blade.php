@@ -107,7 +107,6 @@
     <div class="navigation">
         <a href="{{ route('home') }}">Home</a>
         <a href="{{ route('about') }}">About Us</a>
-        <a href="#how-it-works">How it Works</a>
         <a href="{{ route('register') }}">Register As Donor</a>
         <a href="{{ route('contact') }}">Contact Us</a>
     </div>
@@ -125,7 +124,8 @@
     </div>
 
     <div class="main-content">
-      <form action="#" method="post">
+      <form action="{{ route('handleContactForm') }}" method="post">
+        @csrf
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
 

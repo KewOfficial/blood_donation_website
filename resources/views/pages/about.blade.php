@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blood Donation Network - About Us</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -40,14 +41,7 @@
         .hero-section {
             position: relative;
             height: 400px;
-            overflow: hidden;
-        }
-
-        .hero-section img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
+            background: url('/dist/img/donor.jpg') no-repeat center center/cover;
         }
 
         .hero-content {
@@ -106,12 +100,6 @@
             font-size: 4rem;
             margin-bottom: 20px;
             color: #AF1831;
-        }
-
-        .fa-heart,
-        .fa-eye,
-        .fa-handshake {
-            margin: 20px 0;
         }
 
         .footer-section h4 {
@@ -178,19 +166,16 @@
 </head>
 
 <body>
-<body>
 
     <div class="navigation">
         <a href="{{ route('home') }}">Home</a>
         <a href="{{ route('about') }}">About Us</a>
-        <a href="#how-it-works">How it Works</a>
         <a href="{{ route('register') }}">Register As Donor</a>
         <a href="{{ route('contact') }}">Contact Us</a>
     </div>
 
     <!-- Hero Section -->
     <div class="hero-section">
-        <img src="/dist/img/donor.jpg" alt="Community and Support">
         <div class="hero-content">
             <h1>Empowering Tanzanian Communities Through Blood Donation</h1>
             <a href="#" class="cta-button">Learn More About Our Mission</a>
@@ -198,27 +183,29 @@
     </div>
 
     <!-- Mission, Vision, and Values -->
-    <div class="mission-vision">
+    <div class="mission-vision container">
         <h2 class="section-heading">Mission, Vision, and Values</h2>
-        <div>
-            <i class="fas fa-heart mission-icon"></i>
-            <h3>Our Mission</h3>
-            <p>The mission of the Blood Donation Network is to save lives by connecting blood donors with patients in need, ensuring a steady and reliable blood supply for medical emergencies, surgeries, and ongoing treatments. We aim to raise awareness about the importance of blood donation and foster a culture of voluntary blood donation within our community.</p>
-        </div>
-        <div>
-            <i class="fas fa-eye vision-icon"></i>
-            <h3>Our Vision</h3>
-            <p>Our vision is to build a world where no patient suffers due to a lack of blood supply. We envision a future where every individual understands the critical role of blood donation in healthcare and actively participates in saving lives through regular blood donation. Through our efforts, we strive to create a sustainable blood donation ecosystem that serves the needs of patients across the globe.</p>
-        </div>
-        <div>
-            <i class="fas fa-handshake values-icon"></i>
-            <h3>Our Values</h3>
-            <p>At the core of our organization are values such as compassion, integrity, collaboration, and innovation. We believe in treating every donor, patient, and stakeholder with respect and empathy, ensuring transparency and honesty in all our interactions. We embrace teamwork and partnership, recognizing that collective efforts are essential to achieving our mission. Additionally, we continuously seek innovative solutions to enhance the efficiency and effectiveness of blood donation and distribution processes.</p>
+        <div class="row">
+            <div class="col-md-4">
+                <i class="fas fa-heart mission-icon"></i>
+                <h3>Our Mission</h3>
+                <p>The mission of the Blood Donation Network is to save lives by connecting blood donors with patients in need, ensuring a steady and reliable blood supply for medical emergencies, surgeries, and ongoing treatments. We aim to raise awareness about the importance of blood donation and foster a culture of voluntary blood donation within our community.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-eye vision-icon"></i>
+                <h3>Our Vision</h3>
+                <p>Our vision is to build a world where no patient suffers due to a lack of blood supply. We envision a future where every individual understands the critical role of blood donation in healthcare and actively participates in saving lives through regular blood donation. Through our efforts, we strive to create a sustainable blood donation ecosystem that serves the needs of patients across the globe.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-handshake values-icon"></i>
+                <h3>Our Values</h3>
+                <p>At the core of our organization are values such as compassion, integrity, collaboration, and innovation. We believe in treating every donor, patient, and stakeholder with respect and empathy, ensuring transparency and honesty in all our interactions. We embrace teamwork and partnership, recognizing that collective efforts are essential to achieving our mission. Additionally, we continuously seek innovative solutions to enhance the efficiency and effectiveness of blood donation and distribution processes.</p>
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer bg-dark text-white">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -227,8 +214,7 @@
                         <ul class="contact-info">
                             <li><i class="fas fa-phone"></i> Phone: +255742848456</li>
                             <li><i class="fas fa-envelope"></i> Email: info@blooddonationnetwork.co.tz</li>
-                            <li><i class="fas fa-map-marker-alt"></i> Address: 123 Aggrey Street, Dar es salaam,
-                                Tanzania</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Address: 123 Aggrey Street, Dar es salaam, Tanzania</li>
                         </ul>
                     </div>
                 </div>
@@ -265,6 +251,9 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

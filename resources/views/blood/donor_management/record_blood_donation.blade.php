@@ -24,22 +24,22 @@
                             <select name="donor_id" id="donor_id" class="form-control" required>
                                 <option value="">Select donor</option>
                                 @foreach($donors as $donor)
-                                    <option value="{{ $donor->id }}">{{ $donor->full_name }}</option>
+                                    <option value="{{ $donor->id }}"
+                                            data-name="{{ $donor->full_name }}"
+                                            data-blood-type="{{ $donor->blood_type }}"
+                                            data-phone="{{ $donor->phone }}">{{ $donor->full_name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <!-- End Donor Selection -->
-                        <div class="form-group">
-                            <label for="full_name">Full Name</label>
-                            <input type="text" name="full_name" id="full_name" class="form-control" placeholder="Enter full name" required>
-                        </div>
+
                         <div class="form-group">
                             <label for="blood_type">Blood Type</label>
                             <select name="blood_type" id="blood_type" class="form-control" required>
                                 <option value="">Select blood type</option>
                                 <option value="A+">A+</option>
                                 <option value="A-">A-</option>
-                                <option value="B+">B+</</option>
+                                <option value="B+">B+</option>
                                 <option value="B-">B-</option>
                                 <option value="AB+">AB+</option>
                                 <option value="AB-">AB-</option>
@@ -55,10 +55,7 @@
                             <label for="donation_date">Donation Date</label>
                             <input type="date" name="donation_date" id="donation_date" class="form-control" required>
                         </div>
-                        <div class="form-group">
-                            <label for="number_of_donations">Number of Donations</label>
-                            <input type="number" name="number_of_donations" id="number_of_donations" class="form-control" placeholder="Enter number of donations" required>
-                        </div>
+                        
                         <div class="form-group">
                             <label for="notes">Notes</label>
                             <textarea name="notes" id="notes" class="form-control" rows="3" placeholder="Enter any additional notes"></textarea>
@@ -71,23 +68,17 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('#donor_id').select2();
+        document.addEventListener('DOMContentLoaded', function() {
+            var donorSelect = document.getElementById('donor_id');
+            donorSelect.addEventListener('change', function() {
+                var selectedOption = donorSelect.options[donorSelect.selectedIndex];
+                var name = selectedOption.getAttribute('data-name');
+                var bloodType = selectedOption.getAttribute('data-blood-type');
+                var phone = selectedOption.getAttribute('data-phone');
 
-            $('#donor_id').on('change', function() {
-                var donorId = $(this).val();
-                if (donorId) {
-                    $.ajax({
-                        url: '{{ route('donor.details') }}',
-                        type: 'GET',
-                        data: { id: donorId },
-                        success: function(data) {
-                            $('#full_name').val(data.full_name);
-                            $('#blood_type').val(data.blood_type);
-                            $('#phone').val(data.phone);
-                        }
-                    });
-                }
+                document.getElementById('full_name').value = name ? name : '';
+                document.getElementById('blood_type').value = bloodType ? bloodType : '';
+                document.getElementById('phone').value = phone ? phone : '';
             });
         });
     </script>
